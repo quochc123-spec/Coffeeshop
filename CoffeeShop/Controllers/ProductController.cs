@@ -11,7 +11,7 @@ namespace CoffeeShop.Controllers
             this.productRepository = productRepository;
         }
 
-        [Route("Shop")]
+      
         public IActionResult Shop() 
         { 
             return View(productRepository.GetAllProducts());

@@ -12,15 +12,20 @@ namespace CoffeeShop.Models.Services
         }
         public IEnumerable<Product> GetAllProducts()
         {
-            return dbContext.Product;
+            return dbContext.Products;
         }
         public Product? GetProductDetail(int id)
         {
-            return dbContext.Product.FirstOrDefault(p => p.Id == id);
+            return dbContext.Products.FirstOrDefault(p => p.Id == id);
         }
         public IEnumerable<Product> GetTrendingProducts()
         {
             return dbContext.Products.Where(p => p.IsTrendingProduct);
+        }
+
+        public IEnumerable<Product> Shop()
+        {
+            throw new NotImplementedException();
         }
 
         IEnumerable<Product> IProductRepository.GetProductDetail(int id)
