@@ -1,3 +1,4 @@
+using coffeeshop.Models.Services;
 using CoffeeShop.Data;
 using CoffeeShop.Models.Interfaces;
 using CoffeeShop.Models.Services;
@@ -8,9 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddDbContext<CoffeeShopDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("CoffeeShopDbContextConnection")));
+
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
+app.UseSession();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -33,7 +39,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "product",
-    pattern: "{controller=Products}/{action=Shop}/{id?}")
+    pattern: "{controller=Product}/{action=Shop}/{id?}")
     .WithStaticAssets();
 
 
