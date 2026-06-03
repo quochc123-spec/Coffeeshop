@@ -1,17 +1,16 @@
 ﻿using CoffeeShop.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;    
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Data
 {
-    public class CoffeeShopDbContext : DbContext
+    public class CoffeeShopDbContext(DbContextOptions<CoffeeShopDbContext> options) : DbContext(options)
     {
-        public CoffeeShopDbContext(DbContextOptions<CoffeeShopDbContext> options) : base(options)
-        {
-
-        }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public object? Order { get; internal set; }
 
         //seed data
         protected override void OnModelCreating(ModelBuilder modelBuilder)

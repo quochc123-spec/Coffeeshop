@@ -14,6 +14,7 @@ namespace coffeeshop.Controllers
             this.shoppingCartRepository = shoppingCartRepository;
             this.productRepository = productRepository;
         }
+      
         public IActionResult Index()
         {
             var items = shoppingCartRepository.GetAllShoppingCartItems();
@@ -21,6 +22,7 @@ namespace coffeeshop.Controllers
             ViewBag.TotalCart = shoppingCartRepository.GetShoppingCartTotal();
             return View(items);
         }
+        [HttpPost]
         public RedirectToActionResult AddToShoppingCart(int pId)
         {
             var product = productRepository.GetAllProducts().FirstOrDefault(p => p.Id == pId);

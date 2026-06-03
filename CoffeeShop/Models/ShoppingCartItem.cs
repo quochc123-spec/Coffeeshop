@@ -6,5 +6,6 @@
         public Product? Product { get; set; }
         public int Qty { get; set; }
         public string? ShoppingCartId { get; set; }
+        public int Quantity { get; internal set; }
     }
 }

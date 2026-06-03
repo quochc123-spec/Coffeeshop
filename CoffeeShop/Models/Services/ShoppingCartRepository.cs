@@ -11,7 +11,11 @@ namespace coffeeshop.Models.Services
         {
             this.dbContext = dbContext;
         }
-        public List<ShoppingCartItem>? ShoppingCartItems { get; set; }
+
+        // initialize to avoid possible null dereference when using this property
+        // non-nullable to match IShoppingCartRepository; use target-typed new() per IDE0028
+        public List<ShoppingCartItem> ShoppingCartItems { get; set; } = new();
+
         public string? ShoppingCartId { set; get; }
         public static ShoppingCartRepository GetCart(IServiceProvider services)
         {
@@ -27,7 +31,8 @@ namespace coffeeshop.Models.Services
         public void AddToCart(Product product)
         {
             var shoppingCartItem = dbContext.ShoppingCartItems.FirstOrDefault(s =>
-            s.Product.Id == product.Id && s.ShoppingCartId == ShoppingCartId);
+                // guard s.Product against null before accessing its Id
+                s.Product != null && s.Product.Id == product.Id && s.ShoppingCartId == ShoppingCartId);
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
@@ -53,20 +58,32 @@ namespace coffeeshop.Models.Services
         }
         public List<ShoppingCartItem> GetAllShoppingCartItems()
         {
-            return ShoppingCartItems ??= dbContext.ShoppingCartItems.Where(s =>
-            s.ShoppingCartId == ShoppingCartId).Include(p => p.Product).ToList();
+            // assign directly because ShoppingCartItems is non-nullable
+            ShoppingCartItems = dbContext.ShoppingCartItems
+                .Where(s => s.ShoppingCartId == ShoppingCartId)
+                .Include(p => p.Product)
+                .ToList();
+            return ShoppingCartItems;
         }
+
+        public IEnumerable<object> GetShoppingCartItems()
+        {
+            throw new NotImplementedException();
+        }
+
         public decimal GetShoppingCartTotal()
         {
             var totalCost = dbContext.ShoppingCartItems.Where(s => s.ShoppingCartId ==
             ShoppingCartId)
-            .Select(s => s.Product.Price * s.Qty).Sum();
+            // guard s.Product against null; treat null product as zero cost
+            .Select(s => (s.Product != null ? s.Product.Price * s.Qty : 0m)).Sum();
             return totalCost;
         }
         public int RemoveFromCart(Product product)
         {
             var shoppingCartItem = dbContext.ShoppingCartItems.FirstOrDefault(s =>
-            s.Product.Id == product.Id && s.ShoppingCartId == ShoppingCartId);
+                // guard s.Product against null before accessing its Id
+                s.Product != null && s.Product.Id == product.Id && s.ShoppingCartId == ShoppingCartId);
             var quantity = 0;
             if (shoppingCartItem != null)
             {

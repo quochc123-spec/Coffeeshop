@@ -1,11 +1,12 @@
 ﻿using CoffeeShop.Data;
 using CoffeeShop.Models.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Models.Services
 {
     public class ProductRepository : IProductRepository
     {
-        private CoffeeShopDbContext dbContext;
+        private readonly CoffeeShopDbContext dbContext;
         public ProductRepository(CoffeeShopDbContext dbContext) 
         {
             this.dbContext = dbContext;
@@ -28,9 +29,9 @@ namespace CoffeeShop.Models.Services
             throw new NotImplementedException();
         }
 
-        IEnumerable<Product> IProductRepository.GetProductDetail(int id)
+        IEnumerable<Product> IProductRepository.GetProductDetail(int id)    
         {
-            throw new NotImplementedException();
+            return dbContext.Products.Where(p => p.Id == id).ToList();
         }
     }
 }

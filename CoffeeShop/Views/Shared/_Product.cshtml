@@ -1,5 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model CoffeeShop.Models.Product
+<div class="item features-image col-12 col-md-6 col-lg-4">
+    <div class="item-wrapper">
+        <div class="item-img">
+            <img src="@Model.ImgUrl" alt="@Model.Name">
+        </div>
+        <div class="item-content">
+
+            <a asp-controller="Products" asp-action="Detail" asp-route-id="@Model.Id">
+                <h6 class="item-subtitle"><strong>@Model.Name</strong></h6>
+            </a>
+            <p class="mbr-text">@Model.Price.ToString("C")</p>
+        </div>
+        <div class="mbr-section-btn item-footer mt-2">
+            <a href="#" class="btn btn-primary">Add to cart</a>
+        </div>
+    </div>
+</div>

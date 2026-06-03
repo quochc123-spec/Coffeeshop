@@ -7,6 +7,8 @@
         List<ShoppingCartItem> GetAllShoppingCartItems();
         void ClearCart();
         decimal GetShoppingCartTotal();
+        IEnumerable<object> GetShoppingCartItems();
+
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }
