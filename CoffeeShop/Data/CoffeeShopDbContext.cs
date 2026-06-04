@@ -4,8 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Data
 {
-    public class CoffeeShopDbContext(DbContextOptions<CoffeeShopDbContext> options) : DbContext(options)
+    public class CoffeeShopDbContext : IdentityDbContext
     {
+        public CoffeeShopDbContext(DbContextOptions<CoffeeShopDbContext> options) : base(options)
+        {
+
+        }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Order> Orders { get; set; }

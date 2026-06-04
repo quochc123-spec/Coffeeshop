@@ -23,9 +23,9 @@ namespace coffeeshop.Controllers
             return View(items);
         }
         [HttpPost]
-        public RedirectToActionResult AddToShoppingCart(int pId)
+        public RedirectToActionResult AddToShoppingCart(int productId)
         {
-            var product = productRepository.GetAllProducts().FirstOrDefault(p => p.Id == pId);
+            var product = productRepository.GetAllProducts().FirstOrDefault(p => p.Id == productId);
             if (product != null)
             {
                 shoppingCartRepository.AddToCart(product);

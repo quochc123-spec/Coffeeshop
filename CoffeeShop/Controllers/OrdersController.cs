@@ -1,8 +1,10 @@
 ﻿using CoffeeShop.Models;
 using CoffeeShop.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace CoffeeShop.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private IOrderRepository orderRepository;
@@ -22,8 +24,8 @@ namespace CoffeeShop.Controllers
         {
             orderRepository.PlaceOrder(order);
             shoppingCartRepository.ClearCart();
-
-            return RedirectToAction("CheckoutComplete");
+            HttpContext.Session.SetInt32("CartCount", 0);
+            return RedirectToAction("CheckoutComplete");          
         }
         public IActionResult CheckoutComplete()
         {

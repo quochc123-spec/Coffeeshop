@@ -131,14 +131,14 @@
                             <img src="@item.ImgUrl" alt="Coffee Shop" title="">
                         </div>
                         <div class="item-content">
-                            <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.Id"
+                            <a asp-controller="Product" asp-action="Detail" asp-route-productId="@item.Id"
                                target="_self"><h6 class="item-subtitle mbr-fonts-style mt-1 display7"><strong>@item.Name</strong></h6></a>
                             <p class="mbr-text mbr-fonts-style mt-3 display7">@item.Price.ToString("C")</p>
                         </div>
                         <div class="mbr-section-btn item-footer mt-2">
                             <a asp-controller="ShoppingCart" asp-action="Index" 
                                class="btn btn-success">
-                                Thêm vào giỏ hàng
+                                Add to cart
                             </a>
                         </div>
                     </div>
