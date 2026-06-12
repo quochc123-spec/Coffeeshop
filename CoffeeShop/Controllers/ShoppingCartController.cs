@@ -23,6 +23,7 @@ namespace coffeeshop.Controllers
             return View(items);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken] 
         public RedirectToActionResult AddToShoppingCart(int productId)
         {
             var product = productRepository.GetAllProducts().FirstOrDefault(p => p.Id == productId);

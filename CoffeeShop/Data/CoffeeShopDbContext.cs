@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Data
 {
-    public class CoffeeShopDbContext : IdentityDbContext
+    public class CoffeeShopDbContext : IdentityDbContext<ApplicationUser>
     {
         public CoffeeShopDbContext(DbContextOptions<CoffeeShopDbContext> options) : base(options)
         {

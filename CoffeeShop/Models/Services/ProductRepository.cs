@@ -29,9 +29,9 @@ namespace CoffeeShop.Models.Services
             throw new NotImplementedException();
         }
 
-        IEnumerable<Product> IProductRepository.GetProductDetail(int id)    
+        Product? IProductRepository.GetProductDetail(int id)
         {
-            return dbContext.Products.Where(p => p.Id == id).ToList();
+            return dbContext.Products.FirstOrDefault(p => p.Id == id);
         }
     }
 }

@@ -68,7 +68,8 @@ namespace coffeeshop.Models.Services
 
         public IEnumerable<object> GetShoppingCartItems()
         {
-            throw new NotImplementedException();
+            // Ensure items are loaded from the database and return them as objects
+            return GetAllShoppingCartItems().Cast<object>();
         }
 
         public decimal GetShoppingCartTotal()
